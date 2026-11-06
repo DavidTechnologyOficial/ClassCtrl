@@ -6,17 +6,26 @@
   <meta name="description" content="Página de entrada de ClassCtrl">
   <title>ClassCtrl</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/Classctrl.svg" type="image/svg+xml">
   <script src="config.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
   <main class="card">
-    <p class="brand">ClassCtrl</p>
+    <p class="brand">
+      <img class="brand-logo" src="assets/Classctrl.svg" alt="">
+      <span>ClassCtrl</span>
+    </p>
     <h1>Conectando con ClassCtrl</h1>
     <p id="connection-message" role="status" aria-live="polite">
-      El servidor temporal debe estar encendido para iniciar sesión.
+      <span class="loading-visual" aria-hidden="true">
+        <img class="loading-animation" data-animation-src="assets/Classctrl_animation.svg" alt="">
+        <img class="loading-static" src="assets/Classctrl.svg" alt="">
+      </span>
+      <span>Comprobando la disponibilidad del servidor…</span>
     </p>
     <a id="open-classctrl" class="button-link" hidden>Abrir ClassCtrl</a>
+    <button id="retry-connection" class="secondary-button" type="button" hidden>Reintentar</button>
     <p id="setup-help" class="setup-help">
       Falta configurar la dirección HTTPS del servidor en <code>config.js</code>.
     </p>

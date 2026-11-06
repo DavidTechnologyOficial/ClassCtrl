@@ -27,10 +27,19 @@ body {
 }
 
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 0 0 8px;
   color: #1457a6;
   font-size: 1.1rem;
   font-weight: 750;
+}
+
+.brand-logo {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
 }
 
 h1 {
@@ -39,9 +48,45 @@ h1 {
 }
 
 .setup-help,
-.disclaimer {
+.disclaimer,
+#connection-message {
   color: #52657e;
   line-height: 1.55;
+}
+
+#connection-message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+}
+
+.loading-visual {
+  display: inline-grid;
+  flex: 0 0 56px;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+}
+
+.loading-animation,
+.loading-static {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.loading-static {
+  display: none;
+}
+
+.loading-visual.animation-failed .loading-animation {
+  display: none;
+}
+
+.loading-visual.animation-failed .loading-static {
+  display: block;
 }
 
 .button-link {
@@ -66,6 +111,27 @@ h1 {
   outline-offset: 2px;
 }
 
+button {
+  min-height: 46px;
+  padding: 10px 16px;
+  border: 1px solid #9db6d2;
+  border-radius: 8px;
+  color: #174b84;
+  background: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+#retry-connection {
+  margin-top: 12px;
+}
+
 [hidden] {
   display: none !important;
 }
@@ -73,5 +139,15 @@ h1 {
 @media (max-width: 480px) {
   body {
     padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-animation {
+    display: none;
+  }
+
+  .loading-static {
+    display: block;
   }
 }

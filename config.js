@@ -1,3 +1,3 @@
 window.CLASSCTRL_CONFIG = {
-  serverUrl: "https://starsmerchant-stack-invision-expression.trycloudflare.com"
+  serverUrl: "https://songs-intensive-sub-rrp.trycloudflare.com"
 };
