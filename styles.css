@@ -62,6 +62,10 @@ h1 {
   min-height: 56px;
 }
 
+#connection-message > span:last-child {
+  white-space: pre-line;
+}
+
 .loading-visual {
   display: inline-grid;
   flex: 0 0 56px;

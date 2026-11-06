@@ -9,6 +9,7 @@
   const centralSetupHelp = document.getElementById("central-setup-help");
   const retryButton = document.getElementById("retry-connection");
   const configuredUrl = window.CLASSCTRL_CONFIG?.serverUrl;
+  const centralLoginUrl = window.CLASSCTRL_CONFIG?.centralLoginUrl;
   const centralRegisterUrl = window.CLASSCTRL_CONFIG?.centralRegisterUrl;
   let redirectTimer;
   let redirectCancelled = false;
@@ -22,29 +23,6 @@
         "Redirección cancelada. Puedes iniciar sesión o usar el registro técnico.";
     }
     cancelRedirectButton.hidden = true;
-  }
-
-  try {
-    const registration = new URL(centralRegisterUrl);
-    if (
-      registration.protocol !== "https:" ||
-      !registration.hostname ||
-      registration.username ||
-      registration.password ||
-      registration.search ||
-      registration.hash
-    ) {
-      throw new Error("Dirección de registro no válida");
-    }
-    createTechLink.href = registration.toString();
-    createTechLink.removeAttribute("aria-disabled");
-    createTechLink.removeAttribute("tabindex");
-    createTechLink.removeAttribute("aria-describedby");
-    centralSetupHelp.hidden = true;
-  } catch {
-    createTechLink.removeAttribute("href");
-    createTechLink.setAttribute("aria-disabled", "true");
-    centralSetupHelp.hidden = false;
   }
 
   createTechLink.addEventListener("click", (event) => {
@@ -62,10 +40,10 @@
       "Redirección cancelada. Puedes continuar al inicio de sesión o usar el registro técnico.";
   });
 
+  let server;
   let destination;
-  let healthUrl;
   try {
-    const server = new URL(configuredUrl);
+    server = new URL(configuredUrl);
     if (
       server.protocol !== "https:" ||
       !server.hostname ||
@@ -78,15 +56,54 @@
       throw new Error("Dirección no válida");
     }
 
-    destination = `${server.origin}/cuentas/login/`;
-    healthUrl = `${server.origin}/health/`;
+    const login = new URL(centralLoginUrl);
+    if (
+      login.protocol !== "https:" ||
+      login.origin !== server.origin ||
+      login.pathname !== "/cuentas/login/" ||
+      login.username ||
+      login.password ||
+      login.search ||
+      login.hash
+    ) {
+      throw new Error("Dirección de inicio de sesión central no válida");
+    }
+    destination = login.toString();
   } catch {
     message.querySelector("span:last-child").textContent =
-      "Falta configurar una dirección HTTPS válida del servidor.";
+      "Falta configurar la URL HTTPS del servicio central y su inicio de sesión.";
     setupHelp.hidden = false;
+    createTechLink.removeAttribute("href");
+    createTechLink.setAttribute("aria-disabled", "true");
+    centralSetupHelp.hidden = false;
     return;
   }
 
+  try {
+    const registration = new URL(centralRegisterUrl);
+    if (
+      registration.protocol !== "https:" ||
+      registration.origin !== server.origin ||
+      registration.pathname !== "/cuentas/registro/" ||
+      registration.username ||
+      registration.password ||
+      registration.search ||
+      registration.hash
+    ) {
+      throw new Error("Dirección de registro central no válida");
+    }
+    createTechLink.href = registration.toString();
+    createTechLink.removeAttribute("aria-disabled");
+    createTechLink.removeAttribute("tabindex");
+    createTechLink.removeAttribute("aria-describedby");
+    centralSetupHelp.hidden = true;
+  } catch {
+    createTechLink.removeAttribute("href");
+    createTechLink.setAttribute("aria-disabled", "true");
+    centralSetupHelp.hidden = false;
+  }
+
+  const healthUrl = `${server.origin}/health/`;
   setupHelp.hidden = true;
   openLink.href = destination;
   retryButton.hidden = false;
@@ -105,11 +122,11 @@
     retryButton.disabled = true;
     openLink.hidden = true;
     message.querySelector("span:last-child").textContent =
-      "Comprobando la disponibilidad del servidor…";
+      "Comprobando la disponibilidad del servidor central…";
     if (!reduceMotion) {
       visual.classList.remove("animation-failed");
       const animationUrl = new URL(animatedLogo.dataset.animationSrc, document.baseURI);
-      animationUrl.searchParams.set("v", "2");
+      animationUrl.searchParams.set("v", "3");
       animationUrl.searchParams.set("cycle", Date.now().toString());
       animatedLogo.src = animationUrl.toString();
     }
@@ -128,12 +145,18 @@
         throw new Error(`El servidor respondió con HTTP ${response.status}.`);
       }
       const result = await response.json();
-      if (result.status !== "ok") {
-        throw new Error("La respuesta de salud no es válida.");
+      if (result.status !== "ok" || result.service !== "central") {
+        throw new Error("El destino no confirmó que sea el servicio central.");
       }
-      message.querySelector("span:last-child").textContent = redirectCancelled
-        ? "ClassCtrl está disponible. La redirección automática está cancelada; puedes iniciar sesión o usar el registro técnico."
-        : "ClassCtrl está disponible. Serás redirigido para iniciar sesión.";
+      message.querySelector("span:last-child").textContent =
+        `CLASSCTRL — SERVIDOR CENTRAL\n` +
+        `Estado: disponible\n` +
+        `URL pública: ${server.origin}\n\n` +
+        `GitHub Pages:\n` +
+        `Configuración local actualizada.\n` +
+        `Pendiente subir los archivos indicados al repositorio.\n\n` +
+        `Mantén funcionando el servidor central y su túnel.` +
+        (redirectCancelled ? "\nRedirección automática cancelada." : "");
       openLink.hidden = false;
       const animationDelay = reduceMotion
         ? 0
@@ -149,9 +172,11 @@
       visual.classList.add("animation-failed");
       message.querySelector("span:last-child").textContent =
         error.name === "TimeoutError" || error.name === "AbortError"
-          ? "El servidor tardó demasiado. Comprueba que el túnel esté activo."
-          : "No se pudo conectar con ClassCtrl. Comprueba el servidor y vuelve a intentar.";
-      openLink.hidden = false;
+          ? "El servicio central tardó demasiado. Comprueba que el servidor y su túnel estén activos."
+          : error.message === "El destino no confirmó que sea el servicio central."
+            ? "La URL respondió, pero no identificó el servicio central. No se realizará la redirección."
+            : "No se pudo conectar con el servicio central. Comprueba el servidor y vuelve a intentar.";
+      openLink.hidden = true;
       setupHelp.hidden = true;
     } finally {
       window.clearTimeout(timeout);
