@@ -1,5 +1,5 @@
 window.CLASSCTRL_CONFIG = {
-  serverUrl: "https://disposition-obligation-soon-viewing.trycloudflare.com",
-  centralLoginUrl: "https://disposition-obligation-soon-viewing.trycloudflare.com/cuentas/login/",
-  centralRegisterUrl: "https://disposition-obligation-soon-viewing.trycloudflare.com/cuentas/registro/"
+  serverUrl: "https://strictly-appreciated-styles-solomon.trycloudflare.com",
+  centralLoginUrl: "https://strictly-appreciated-styles-solomon.trycloudflare.com/cuentas/login/",
+  centralRegisterUrl: "https://strictly-appreciated-styles-solomon.trycloudflare.com/cuentas/registro/"
 };
