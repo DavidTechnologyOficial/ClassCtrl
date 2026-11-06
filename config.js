@@ -1,3 +1,3 @@
 window.CLASSCTRL_CONFIG = {
-  serverUrl: "https://cleared-generator-prospects-defensive.trycloudflare.com"
+  serverUrl: "https://specific-lincoln-enrollment-liberty.trycloudflare.com"
 };
