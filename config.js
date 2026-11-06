@@ -1,3 +1,3 @@
 window.CLASSCTRL_CONFIG = {
-  serverUrl: "https://marker-custody-todd-colored.trycloudflare.com"
+  serverUrl: "https://cleared-generator-prospects-defensive.trycloudflare.com"
 };
