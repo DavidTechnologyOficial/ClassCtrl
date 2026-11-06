@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Página de entrada de ClassCtrl">
+  <title>ClassCtrl</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="card">
+    <p class="brand">ClassCtrl</p>
+    <h1>Conectando con ClassCtrl</h1>
+    <p id="connection-message" role="status" aria-live="polite">
+      El servidor temporal debe estar encendido para iniciar sesión.
+    </p>
+    <a id="open-classctrl" class="button-link" hidden>Abrir ClassCtrl</a>
+    <p id="setup-help" class="setup-help">
+      Falta configurar la dirección HTTPS del servidor en <code>config.js</code>.
+    </p>
+    <p class="disclaimer">
+      Al continuar, la dirección del navegador cambiará al servidor temporal de ClassCtrl.
+      No escribas tus credenciales en esta página pública.
+    </p>
+  </main>
+</body>
+</html>

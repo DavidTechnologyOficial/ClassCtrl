@@ -1,0 +1,77 @@
+:root {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #172b4d;
+  background: #f2f6fc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+}
+
+.card {
+  width: min(100%, 560px);
+  padding: clamp(24px, 6vw, 40px);
+  border: 1px solid #dce5f1;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 36px rgb(23 43 77 / 8%);
+}
+
+.brand {
+  margin: 0 0 8px;
+  color: #1457a6;
+  font-size: 1.1rem;
+  font-weight: 750;
+}
+
+h1 {
+  margin: 0 0 16px;
+  font-size: clamp(1.6rem, 5vw, 2rem);
+}
+
+.setup-help,
+.disclaimer {
+  color: #52657e;
+  line-height: 1.55;
+}
+
+.button-link {
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: #fff;
+  background: #1457a6;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.button-link:hover {
+  background: #0e4383;
+}
+
+.button-link:focus-visible {
+  outline: 3px solid #75aaf0;
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 12px;
+  }
+}
