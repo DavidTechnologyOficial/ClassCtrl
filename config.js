@@ -1,3 +1,3 @@
 window.CLASSCTRL_CONFIG = {
-  serverUrl: "https://specific-lincoln-enrollment-liberty.trycloudflare.com"
+  serverUrl: "https://starsmerchant-stack-invision-expression.trycloudflare.com/cuentas/login/"
 };
