@@ -5,26 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Página de entrada de ClassCtrl">
   <title>ClassCtrl</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="assets/Classctrl.svg" type="image/svg+xml">
-  <script src="config.js" defer></script>
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=2">
+  <link rel="icon" href="assets/Classctrl_sin_texto.svg" type="image/svg+xml">
+  <script src="config.js?v=2" defer></script>
+  <script src="app.js?v=2" defer></script>
 </head>
 <body>
   <main class="card">
     <p class="brand">
-      <img class="brand-logo" src="assets/Classctrl.svg" alt="">
+      <img class="brand-logo" src="assets/Classctrl_sin_texto.svg" alt="">
       <span>ClassCtrl</span>
     </p>
     <h1>Conectando con ClassCtrl</h1>
+    <a id="create-tech-account" class="button-link" aria-disabled="true" tabindex="0"
+      aria-describedby="central-setup-help">Crear cuenta de técnico</a>
+    <p id="central-setup-help" class="setup-help" role="status">
+      El registro central todavía no está configurado. No escribas tus credenciales en esta página pública.
+    </p>
     <p id="connection-message" role="status" aria-live="polite">
       <span class="loading-visual" aria-hidden="true">
         <img class="loading-animation" data-animation-src="assets/Classctrl_animation.svg" alt="">
-        <img class="loading-static" src="assets/Classctrl.svg" alt="">
+        <img class="loading-static" src="assets/Classctrl_sin_texto.svg" alt="">
       </span>
       <span>Comprobando la disponibilidad del servidor…</span>
     </p>
     <a id="open-classctrl" class="button-link" hidden>Abrir ClassCtrl</a>
+    <button id="cancel-redirect" class="secondary-button" type="button" hidden>
+      Cancelar redirección automática
+    </button>
     <button id="retry-connection" class="secondary-button" type="button" hidden>Reintentar</button>
     <p id="setup-help" class="setup-help">
       Falta configurar la dirección HTTPS del servidor en <code>config.js</code>.

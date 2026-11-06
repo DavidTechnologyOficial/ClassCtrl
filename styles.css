@@ -29,6 +29,7 @@ body {
 .brand {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   margin: 0 0 8px;
   color: #1457a6;
@@ -100,6 +101,16 @@ h1 {
   background: #1457a6;
   font-weight: 700;
   text-decoration: none;
+}
+
+.button-link[aria-disabled="true"] {
+  color: #52657e;
+  background: #e7edf5;
+  cursor: not-allowed;
+}
+
+.button-link + .setup-help {
+  margin-top: 8px;
 }
 
 .button-link:hover {
